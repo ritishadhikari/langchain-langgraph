@@ -1,0 +1,11 @@
+Types of Reflection Agents:
+    - Basic Reflection Agents
+    - Reflection Agents
+    - Language Agent Tree Search (LATS)
+
+MessageGraph:
+    - It is a class that LangGraph provides that we can use to orchestrate the
+    flow of messages between different nodes
+    - Example use case: Simple Routing Decisions, Simple chatbot conversation flow
+    - If you just want to pass messages along between nodes, then go for MessageGraph
+    - If the app requires complex state management, we have StateGraph
