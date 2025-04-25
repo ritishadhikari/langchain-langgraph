@@ -9,3 +9,19 @@ MessageGraph:
     - Example use case: Simple Routing Decisions, Simple chatbot conversation flow
     - If you just want to pass messages along between nodes, then go for MessageGraph
     - If the app requires complex state management, we have StateGraph
+
+Reflexion Agents in Langgraph:
+    - The main component is the actor
+    - It is the main agent that drives everything - it reflects on its 
+    responses and re-executes
+    - It can do this with or without tools to improve based on self-critique
+    that is grounded in external data
+    - It's main subcomponent includes:
+        - tools/tool execution
+        - initial responder: generate an initial response & self reflection
+        - revisor: re-respond and reflect based on previous reflections
+    - Episodic Memory:
+        - This memory refers to an agent's ability to recall specific past 
+        interactions, events or experiences rather than just generalized knowledge
+        - This is crucial for making agents feel more context-aware, personalized,
+        and human-like over time
