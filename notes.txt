@@ -30,3 +30,7 @@ LLM Response Parser System:
     - The system converts unstructured LLM outputs into well-defined Python objects
     through a series of structured parsing steps, ensuring data validation and 
     consistent formatting
+    - Key Components:
+        - Chat Prompt Template
+        - Function Calling with Pydantic Schema
+        - Pydantic Parser
