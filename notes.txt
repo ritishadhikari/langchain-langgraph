@@ -25,3 +25,8 @@ Reflexion Agents in Langgraph:
         interactions, events or experiences rather than just generalized knowledge
         - This is crucial for making agents feel more context-aware, personalized,
         and human-like over time
+
+LLM Response Parser System:
+    - The system converts unstructured LLM outputs into well-defined Python objects
+    through a series of structured parsing steps, ensuring data validation and 
+    consistent formatting
