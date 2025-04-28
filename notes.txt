@@ -34,3 +34,9 @@ LLM Response Parser System:
         - Chat Prompt Template
         - Function Calling with Pydantic Schema
         - Pydantic Parser
+
+State:
+    - It is a way to maintain and track information as an AI system processes data
+    - Think of it as the memory, allowing it to remember and update information as
+    it moves through different stages of a workflow, or graph
+    - 
