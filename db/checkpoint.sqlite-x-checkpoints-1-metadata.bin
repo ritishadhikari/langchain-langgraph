@@ -1,0 +1,1 @@
+{"source": "input", "writes": {"__start__": {"messages": {"lc": 1, "type": "constructor", "id": ["langchain", "schema", "messages", "HumanMessage"], "kwargs": {"content": "Hi, my name is Ritish", "type": "human"}}}}, "step": -1, "parents": {}, "thread_id": 2}

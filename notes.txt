@@ -39,4 +39,18 @@ State:
     - It is a way to maintain and track information as an AI system processes data
     - Think of it as the memory, allowing it to remember and update information as
     it moves through different stages of a workflow, or graph
-    - 
+
+Checkpointer:
+    - It is essentially a way to save the state of your agent or workflow at specific
+    points during execution
+    - If something goes wrong later, you can return to this saved point and start the
+    entire workflow again
+    - You don't have to start over from the beginning
+    - Checkpoint save the complete state after a node finishes its work
+
+Thread ID:
+    - It is simply a unique identifier for each specific conversation or workflow
+    execution
+    - It is a unique session ID for a user
+    - A conversation ID that groups related messages togather
+    - It helps the system know which saved state belongs to which conversations
