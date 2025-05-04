@@ -75,3 +75,8 @@ Interrupt Class:
 
 Command Class:
     - The command class in Langgraph allows us to create edgeless workflows
+
+Subgraphs:
+    - It allows you to build complex systems with multiple components that are
+    themselves graphs
+    - A common use-case for using subgraphs is building multi-agent systems
