@@ -1,0 +1,11 @@
+langgraph
+langchain_openai
+langchain_google_genai
+langchain_core
+python_dotenv
+fastapi
+langchain_community
+uvicorn
+pydantic
+notebook
+certifi
