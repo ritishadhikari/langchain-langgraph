@@ -72,15 +72,15 @@ async def tool_node(state):
 
     return state
 
-
 graph_builder=StateGraph(state_schema=State)
 graph_builder.add_node(node="model",action=model)
 graph_builder.add_node(node="tool_node",action=tool_node)
-graph_builder.add_edge(start_key="tool_node",end_key="model")
-graph_builder.set_entry_point(key="model")
 graph_builder.add_conditional_edges("model",path=tools_router,
                                     path_map={"tool_node":"tool_node","end":END}
                                    )
+graph_builder.add_edge(start_key="tool_node",end_key="model")
+graph_builder.set_entry_point(key="model")
+
 graph=graph_builder.compile(checkpointer=memory)
 
 app=FastAPI()
@@ -96,7 +96,7 @@ app.add_middleware(
 
 )
 
-def serialize_ai_message(chunk):
+async def serialize_ai_message(chunk):
     if isinstance(chunk, AIMessageChunk):
         return chunk.content
     else:
@@ -104,7 +104,7 @@ def serialize_ai_message(chunk):
 
 
 
-async def generate_chat_response(message:str, checkpoint_id:Optional[str]=None):
+async def generate_chat_response(message:str, checkpoint_id:str|None=None):
     is_new_conversation=checkpoint_id is None 
 
     if is_new_conversation:
@@ -135,13 +135,13 @@ async def generate_chat_response(message:str, checkpoint_id:Optional[str]=None):
         event_type=event["event"]
         
         if event_type=="on_chat_model_stream":
-            chunk_content=serialize_ai_message(chunk=event['data']['chunk'])
+            chunk_content=await serialize_ai_message(chunk=event['data']['chunk'])
             if chunk_content:
                 safe_content=chunk_content.replace("'","\\'").replace("\n","\\n") # escape single quotes and newlines
                 # send the chunk to the client
                 yield f"data: {{\"type\": \"content\", \"content\":\"{safe_content}\" }}\n\n"
             
-        elif event_type=="on_chat_model_end":
+        elif event_type=="on_chat_model_end":  # on_chat_model_end can happen when it needs a tool to give back the answer
             tool_calls=event["data"]["output"].tool_calls if hasattr(event["data"]["output"],"tool_calls") else []
             search_calls=[call for call in tool_calls if call['name']=="tavily_search_results_json"]
             if search_calls:
@@ -152,6 +152,7 @@ async def generate_chat_response(message:str, checkpoint_id:Optional[str]=None):
                 # send the search query to the client
                 yield f"data: {{\"type\": \"search_start\", \"query\":\"{safe_query}\" }}\n\n"
 
+        # lists out the url's that were used while fetching the information
         elif event_type=="on_tool_end" and event["name"]=="tavily_search_results_json":
             # search completed, send results or error
             output=event["data"]["output"]
@@ -171,7 +172,7 @@ async def generate_chat_response(message:str, checkpoint_id:Optional[str]=None):
     yield f"data: {{\"type\": \"end\"}}\n\n"  # signal end of the conversation
 
 @app.get("/chat_stream/{message}")
-async def chat_stream(message:str, checkpoint_id: Optional[str]=Query(default=None)):
+async def chat_stream(message:str, checkpoint_id: str|None=Query(default=None)):
     return StreamingResponse(
                             content=generate_chat_response(
                                                         message=message, 
