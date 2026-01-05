@@ -39,6 +39,7 @@ State:
     - It is a way to maintain and track information as an AI system processes data
     - Think of it as the memory, allowing it to remember and update information as
     it moves through different stages of a workflow, or graph
+    - When adding add_message to any class attribute, the addition will only happen internally and not through user provided input externally unless any human in the loop class is called
 
 Checkpointer:
     - It is essentially a way to save the state of your agent or workflow at specific
